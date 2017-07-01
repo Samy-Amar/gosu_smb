@@ -1,0 +1,117 @@
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.4
+  exclude:
+    - Gemfile
+
+# Custom rules
+
+# This rule prevents you from doing a.downcase == b.downcase
+# You should use casecmp instead. But casecmp is illegible.
+# How is anyone supposed to guess what a.casecmp(b).zero? means ?
+Performance/Casecmp:
+  Enabled: false
+
+# Rescue modifiers (dangerous_method rescue default) are bad,
+# except when they're not.
+# Sometimes you need them. So you should be careful when verifying PRs,
+# but the rule isn't necessarily needed.
+Style/RescueModifier:
+  Enabled: false
+
+# And/Or is actually quite cool. But they shouldn't be used as && - ||
+# Read about it: http://www.virtuouscode.com/2010/08/02/using-and-and-or-in-ruby/
+# Using 'and' at the right place makes for some sexy, readable code.
+AndOr:
+  Enabled: false
+
+# Wrap regexes in slashes, NOT %r{}
+# fits better with Ruby's style of not having old-school %letter syntax
+# If you want a slash, just escape it with \/
+# (it's not like regexes are legible anyway)
+RegexpLiteral:
+  AllowInnerSlashes: true
+  EnforcedStyle: slashes
+
+# Hashes and arrays, if multiline, must end with a comma
+# Makes it easier to add/remove lines,
+# also nicely keeps consistency with good JS style
+# (although not the end goal)
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+# Having nested ifs can be useful if you're looking to refacto.
+# It's a lot more legible to have nested ifs
+# when the two conditionals have separate logic
+IfInsideElse:
+  Enabled: false
+
+# Use Kernel#sprintf over String#format
+# No real reason except keeping consistency
+Style/FormatString:
+  EnforcedStyle: sprintf
+
+# Double negation ain't bad, it's used in numerous languages.
+# Sometimes you really do want the boolean value of a variable
+Style/DoubleNegation:
+  Enabled: false
+
+# We've had various use cases for a begin block.
+# It's old school programming, but doesn't mean your tests should fail because of it
+Style/BeginBlock:
+  Enabled: false
+
+# Line length is cool, just don't go overboard by making the limit 80.
+# 110 is a great start - it's less harsh than our JS limit of 100, but it still makes for clean code.
+Metrics/LineLength:
+  Enabled: true
+  Max: 100
+
+# What follows is a list of very complicated, niche issues that we probably won't have for a while.
+# The app doesn't have enough experience with these for me to make a choice
+# on whether or not to include them.
+# Rubocop says yes, relaxed.ruby.style says no
+Style/ModuleFunction:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemodulefunction
+Style/Alias:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylealias
+Style/PercentLiteralDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylepercentliteraldelimiters
+Style/PerlBackrefs:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleperlbackrefs
+Style/SingleLineBlockParams:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelineblockparams
+Style/SingleLineMethods:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
+Style/SpecialGlobalVars:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespecialglobalvars
+Style/MixinGrouping:
+  Enabled: false
+
+# Metrics are disabled (apart from line length)
+# Subject to change. For the moment, just use PR reviews to clean up each others' code
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockNesting:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
